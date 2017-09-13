@@ -9,7 +9,7 @@ if 'xrange' not in dir(__builtins__):
     xrange = range  # Python 3 support
 
 
-element = {'none': [None, None], 'int': 42, 'float': 3.1415899999999999,
+doc = {'none': [None, None], 'int': 42, 'float': 3.1415899999999999,
            'list': ['LITE', 'RES_ACID', 'SUS_DEXT'],
            'dict': {'hp': 13, 'sp': 5},
            'bool': [True, False, True, False]}
@@ -17,10 +17,10 @@ element = {'none': [None, None], 'int': 42, 'float': 3.1415899999999999,
 
 def test_caching(storage):
     # Write contents
-    storage.write(element)
+    storage.write(doc)
 
     # Verify contents
-    assert element == storage.read()
+    assert doc == storage.read()
 
 
 def test_caching_read():
@@ -36,10 +36,10 @@ def test_caching_write_many(storage):
 
     # Write contents
     for x in xrange(2):
-        storage.write(element)
+        storage.write(doc)
         assert storage.memory is None  # Still cached
 
-    storage.write(element)
+    storage.write(doc)
 
     # Verify contents: Cache should be emptied and written to storage
     assert storage.memory
@@ -47,7 +47,7 @@ def test_caching_write_many(storage):
 
 def test_caching_flush(storage):
     # Write contents
-    storage.write(element)
+    storage.write(doc)
 
     storage.flush()
 
@@ -57,7 +57,7 @@ def test_caching_flush(storage):
 
 def test_caching_write(storage):
     # Write contents
-    storage.write(element)
+    storage.write(doc)
 
     storage.close()
 
@@ -70,10 +70,10 @@ def test_nested():
     storage()  # Initialization
 
     # Write contents
-    storage.write(element)
+    storage.write(doc)
 
     # Verify contents
-    assert element == storage.read()
+    assert doc == storage.read()
 
 
 def test_caching_json_write(tmpdir):
